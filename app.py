@@ -43,7 +43,6 @@ def _film_info(film_id):
 
 @lru_cache(maxsize=2000)
 def _movies(zip, date):
-    print "running"
     date = date.strftime("%Y%m%d")
     url = "http://igoogle.flixster.com/igoogle/showtimes?movie=all&date=%s&postal=%s" % (date, zip)
     try:
@@ -63,8 +62,11 @@ def _movies(zip, date):
         theater_address = theater_address.strip()
 
         for film in theater.findAll("div", "showtime"):
-            _, _, film_id = film.find("h3").find("a")["href"].rpartition("/")
-            film_title = film.find("h3").find("a").text
+            film_a = film.find("h3").find("a")
+            if not film_a:
+                continue
+            _, _, film_id = film_a["href"].rpartition("/")
+            film_title = film_a.text
             showtimes = [a.text for a in film.find("h3").findNextSiblings("a")]
             if not showtimes:
                 showtimes = [x.strip().replace("&nbsp;", "") for x in film.find("h3").nextSibling.split()]
