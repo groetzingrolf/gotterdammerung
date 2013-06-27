@@ -46,14 +46,9 @@ body {
 	-moz-background-clip: padding;
 	-webkit-background-clip: padding-box;
 	background-clip: padding-box; /* prevents bg color from leaking outside the border */
-	background-color: #010001; /* layer fill content */
-	-moz-box-shadow: 0 1px 5px rgba(1,0,1,.32), inset 0 1px 1px #010001, inset 0 0 0 1px rgba(1,0,1,.13); /* drop shadow, inner shadow and inner glow */
-	-webkit-box-shadow: 0 1px 5px rgba(1,0,1,.32), inset 0 1px 1px #010001, inset 0 0 0 1px rgba(1,0,1,.13); /* drop shadow, inner shadow and inner glow */
-	box-shadow: 0 1px 5px rgba(1,0,1,.32), inset 0 1px 1px #010001, inset 0 0 0 1px rgba(1,0,1,.13); /* drop shadow, inner shadow and inner glow */
-	background-image: -moz-linear-gradient(bottom, rgba(1,0,1,.3) 0%, rgba(1,0,1,.3) 100%); /* gradient overlay */
-	background-image: -o-linear-gradient(bottom, rgba(1,0,1,.3) 0%, rgba(1,0,1,.3) 100%); /* gradient overlay */
-	background-image: -webkit-linear-gradient(bottom, rgba(1,0,1,.3) 0%, rgba(1,0,1,.3) 100%); /* gradient overlay */
-	background-image: linear-gradient(bottom, rgba(1,0,1,.3) 0%, rgba(1,0,1,.3) 100%); /* gradient overlay */
+	-moz-box-shadow: 0 1px 5px rgba(1,0,1,.32);
+	-webkit-box-shadow: 0 1px 5px rgba(1,0,1,.32);
+	box-shadow: 0 1px 5px rgba(1,0,1,.32);
 }
 .event-info {
 	position: absolute;
@@ -63,7 +58,7 @@ body {
 	height: 82px;
 	padding-top: 18px;
 	padding-left: 18px;
-	border-radius: 0 0 3px 3px;
+	border-radius: 0 0 4px 4px;
 	background-image: -moz-linear-gradient(bottom, rgba(1,0,1,.8) 0%, rgba(1,0,1,0) 100%); /* gradient overlay */
 	background-image: -o-linear-gradient(bottom, rgba(1,0,1,.8) 0%, rgba(1,0,1,0) 100%); /* gradient overlay */
 	background-image: -webkit-linear-gradient(bottom, rgba(1,0,1,.8) 0%, rgba(1,0,1,0) 100%); /* gradient overlay */
@@ -73,13 +68,13 @@ body {
 }
 .event-info h3 {
 	color: #ffffff; /* text color */
-	font-weight: 300;
+	font-weight: 100;
 	font-size: 28px;
 	line-height: 36px;
 }
 .event-info h4 {
 	color: #f3f0f5;
 	font-weight: 100;
-	font-size: 18px;
+	font-size: 17px;
 	line-height: 0;
 }
