@@ -1,6 +1,15 @@
 import datetime
 import json
 import os
+from flask import Flask
+from flask import render_template
+
+app = Flask(__name__)
+
+
+@app.route('/')
+def hello():
+    return render_template('index.html')
 
 from BeautifulSoup import BeautifulSoup
 from flask import (request,
@@ -15,9 +24,6 @@ ROTTEN_TOMATOES_KEY = "exr5fbr3d23vvjtdnb6tjpgb"
 FORECAST_KEY = "0b40ae4519f7f08f607f77c3b5ab79f2"
 
 
-app = Flask(__name__)
-
-
 def respond(doc, status=200):
     doc["status"] = status
     return Response(json.dumps(doc), mimetype="application/json")
@@ -25,11 +31,6 @@ def respond(doc, status=200):
 
 def error(status, message):
     return respond({"message": message}, status)
-
-
-@app.route("/")
-def index():
-    return "Hello World!"
 
 
 @lru_cache(maxsize=128)
