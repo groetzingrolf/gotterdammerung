@@ -12,6 +12,7 @@ import requests.exceptions
 
 
 ROTTEN_TOMATOES_KEY = "exr5fbr3d23vvjtdnb6tjpgb"
+FORECAST_KEY = "0b40ae4519f7f08f607f77c3b5ab79f2"
 
 
 app = Flask(__name__)
@@ -106,6 +107,40 @@ def movies():
         movies, message = _movies(zip, date)
 
     return respond({"movies": movies, "message": message})
+
+
+@lru_cache(maxsize=50)
+def _weather(lat, lon, date):
+    date = date.strftime("%Y-%m-%dT12:00:00")
+    url = "https://api.forecast.io/forecast/%s/%s,%s,%s" % (FORECAST_KEY, lat, lon, date)
+    try:
+        res = requests.get(url, timeout=3)
+    except requests.exceptions.Timeout:
+        return None
+
+    return json.loads(res.text).get("daily", {"data": [None]})["data"][0]
+
+
+@app.route("/weather")
+def weather():
+    if "lat" not in request.args:
+        return error(400, "Missing required param 'lat'")
+    lat = request.args["lat"]
+
+    if "lon" not in request.args:
+        return error(400, "Missing required param 'lon'")
+    lon = request.args["lon"]
+
+    if "date" not in request.args:
+        return error(400, "Missing required param 'date'")
+    date = request.args["date"]
+
+    date = datetime.date(*map(int, date.split("-")))
+    today = datetime.date.today()
+    if date < today:
+        return error(400, "Date is in the past.")
+
+    return respond({"weather": _weather(lat, lon, date)})
 
 
 if __name__ == "__main__":
