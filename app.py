@@ -23,9 +23,6 @@ import requests.exceptions
 ROTTEN_TOMATOES_KEY = "exr5fbr3d23vvjtdnb6tjpgb"
 
 
-app = Flask(__name__)
-
-
 def respond(doc, status=200):
     doc["status"] = status
     return Response(json.dumps(doc), mimetype="application/json")
