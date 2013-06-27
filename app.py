@@ -35,7 +35,7 @@ def index():
 def _film_info(film_id):
     url = "http://api.rottentomatoes.com/api/public/v1.0/movies/%s.json?apikey=%s" % (film_id, ROTTEN_TOMATOES_KEY)
     try:
-        res = requests.get(url, timeout=2)
+        res = requests.get(url, timeout=3)
     except requests.exceptions.Timeout:
         return None
     return json.loads(res.text)
@@ -47,7 +47,7 @@ def _movies(zip, date):
     date = date.strftime("%Y%m%d")
     url = "http://igoogle.flixster.com/igoogle/showtimes?movie=all&date=%s&postal=%s" % (date, zip)
     try:
-        res = requests.get(url, timeout=0.5)
+        res = requests.get(url, timeout=3)
     except requests.exceptions.Timeout:
         return [], "Timeout connecting to flixster"
 
