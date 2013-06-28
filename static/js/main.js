@@ -38,7 +38,6 @@ function build_card (score, event_name, event_venue, event_image, callback) {
           resizer.css("font-size", size - 1);
         }
         size = parseInt(resizer.css("font-size"), 10);
-        console.log(size);
         $("#target-location").css("font-size", size).html(resizer.html());
 
         var front = $("<div>").addClass("event").addClass("front").css("width", width).css("height", height);
@@ -108,18 +107,18 @@ function seatgeek_data (data) {
 
     $("#location").show();
 
-    $('#container').isotope({
-      // options
-        itemSelector : '.flip-container',
-        layoutMode : 'fitRows',
-        getSortData: {
-            score: function($elem) {
-                return parseFloat($elem.attr("data-score"));
-            }
-        },
-        sortBy: "score",
-        sortAscending: false,
-    });
+    // $('#container').isotope({
+    //   // options
+    //     itemSelector : '.flip-container',
+    //     layoutMode : 'fitRows',
+    //     getSortData: {
+    //         score: function($elem) {
+    //             return parseFloat($elem.attr("data-score"));
+    //         }
+    //     },
+    //     sortBy: "score",
+    //     sortAscending: false,
+    // });
 
     for (var i = 0; i < data.events.length; i += 1) {
         var event = data.events[i];
@@ -159,6 +158,19 @@ function init () {
         $("#container").transition({ y: '35px' }, function() {
             $('#type-select').fadeIn();
         });
+    });
+    $('#filter-time').click(function() {
+        $(this).html("&nbsp;").width(200);
+        $('#filter-time-input-wrap').show();
+        $('#filter-time-input').focus();
+    });
+    $('#filter-time-input').blur(function() {
+        // Something this hacky deserves a hacky variable name
+        var resizer2 = $("#hidden-resizer2");
+        resizer2.html($(this).val());
+        $('#filter-time-input-wrap').hide();
+        $('#filter-time').html($(this).val()).show().width(resizer2.width());
+        console.log(Date.parse($(this).val()));
     });
 }
 

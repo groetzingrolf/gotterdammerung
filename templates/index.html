@@ -13,7 +13,9 @@
   <body>
     <div id="logo"></div>
     <div class="filter">
-      <h2><span class="filter" id="filter-type">Everything</span> to do <span id="location" style="display: none;">in <span class="filter" id="filter-location">New York City</span> </span><span class="filter" id="time">today</span>.</h2>
+      <h2>
+        <span class="filter" id="filter-type">Everything</span> to do <span id="location" style="display: none;">in <span class="filter" id="filter-location">New York City</span> </span><span class="filter" id="filter-time">today</span><span id="filter-time-input-wrap" style="display: none;"><input type="text" name="filter-time-input" id="filter-time-input"></span>.
+      </h2>
       <div id="type-select" style="display: none;">
         <ul>
           <li><a id="filter-concerts" href="#">Concerts</a></li>
@@ -47,10 +49,12 @@
       </div> -->
     </div>
     <div id="hidden-resizer" style="visibility: hidden"></div>
+    <div id="hidden-resizer2" style="visibility: hidden"></div> <!-- giving it this name to make this all *that much more* hacky -->
     <script src="/static/js/jquery-1.10.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/jquery.isotope.min.js"></script>
     <script src="/static/js/jquery.transit.min.js"></script>
+    <script src="/static/js/date.js"></script>
     <script src="/static/js/main.js"></script>
   </body>
 </html>
