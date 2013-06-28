@@ -16,6 +16,21 @@ body {
   text-align: center;
   width: 1000px;
 }
+#weather {
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+  width: 1000px;
+  font-family: "museo-sans",sans-serif;
+  font-size: 20px;
+  font-weight: 100;
+  margin-top: 5px;
+  position: relative;
+  width: 100%;
+  text-align: center;
+  color: #f0ddff;
+  text-shadow: 0 1px 1px rgba(0,0,0,0.13);
+}
 #hidden-resizer2 {
   /* need same settings for same width */
   font-family: "museo-sans",sans-serif;
