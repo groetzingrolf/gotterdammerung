@@ -113,22 +113,22 @@ function seatgeek_data (data) {
 
     $("#location").show();
 
-    // $('#container').isotope({
-    //   // options
-    //     itemSelector : '.flip-container',
-    //     layoutMode : 'perfectMasonry',
-    //     perfectMasonry: {
-    //         columnWidth: COL_WIDTH,
-    //         rowHeight: COL_WIDTH,
-    //     },
-    //     getSortData: {
-    //         score: function($elem) {
-    //             return parseFloat($elem.attr("data-score"));
-    //         }
-    //     },
-    //     sortBy: "score",
-    //     sortAscending: false,
-    // });
+    $('#container').isotope({
+      // options
+        itemSelector : '.flip-container',
+        layoutMode : 'perfectMasonry',
+        perfectMasonry: {
+            columnWidth: COL_WIDTH,
+            rowHeight: COL_WIDTH,
+        },
+        getSortData: {
+            score: function($elem) {
+                return parseFloat($elem.attr("data-score"));
+            }
+        },
+        sortBy: "score",
+        sortAscending: false,
+    });
 
     for (var i = 0; i < data.events.length; i += 1) {
         var event = data.events[i];
