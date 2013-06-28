@@ -16,15 +16,21 @@ body {
   text-align: center;
   width: 1000px;
 }
+#hidden-resizer2 { /* need same settings for same width */
+  font-family: "museo-sans",sans-serif;
+  font-size: 32px;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
 .filter h2 {
   font-family: "museo-sans",sans-serif;
+  font-size: 32px;
+  font-weight: 100;
   margin: 0 auto;
   position: relative;
   width: 100%;
   text-align: center;
-  font-size: 32px;
   color: #f0ddff;
-  font-weight: 100;
   text-shadow: 0 1px 1px rgba(0,0,0,0.13);
 }
 .filter span.filter {
