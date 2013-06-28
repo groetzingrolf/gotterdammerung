@@ -115,6 +115,22 @@ function load_movies () {
     });
 }
 
+function weather_data(data) {
+    $("#weather").text(data.weather.summary).attr("data-weather", data.weather.icon).show();
+}
+
+function load_weather () {
+    $("#weather").hide();
+    if (!loc || !loc.lat) {
+        alert("missing location information");
+        return;
+    }
+    $.ajax({
+        url: "/weather?lat=" + loc.lat + "&lon=" + loc.lon + "&date=" + search_date,
+        success: weather_data
+    });
+}
+
 function seatgeek_data (data) {
     if (!data || !data.meta || !data.meta.geolocation) {
         alert("SG API issue.");
@@ -158,6 +174,7 @@ function seatgeek_data_location (data) {
             resizer2.text(loc.display_name);
             $("#filter-location").text(loc.display_name).width(resizer2.outerWidth(true) - 16);
             load_movies();
+            load_weather();
         }
     }
 }
@@ -189,6 +206,7 @@ function reloadEvents(have_location, lat, lon) {
 
     if (have_location) {
         load_movies();
+        load_weather();
     }
 }
 
