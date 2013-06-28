@@ -77,16 +77,16 @@ body {
   padding-top: 18px;
   padding-left: 18px;
   border-radius: 0 0 4px 4px;
-  /* gradient overlay */
-  background-image: -o-linear-gradient(bottom, rgba(1,0,1,.8) 0%, rgba(1,0,1,0) 100%);
-  /* gradient overlay */
-  background-image: -webkit-linear-gradient(bottom, rgba(1,0,1,.8) 0%, rgba(1,0,1,0) 100%);
-  /* gradient overlay */
-  background-image: linear-gradient(bottom, rgba(1,0,1,.8) 0%, rgba(1,0,1,0) 100%);
-  /* gradient overlay */
+	/*background-color: #000000;*/
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.00)), to(rgba(0, 0, 0, 0.80)));
+	background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.80));
+	background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.80));
+	background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.80));
+	background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.80));
+	background-image: linear-gradient(top, rgba(0, 0, 0, 0.00), rgba(0, 0, 0, 0.80));
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#000000', EndColorStr='#000000');
   font-family: "museo-sans",sans-serif;
   text-shadow: 0 1px 4px rgba(1,0,1,.7);
-  /* drop shadow */
 }
 .event-info h3 {
   color: #ffffff;

@@ -52,7 +52,7 @@ function load_movies () {
     }
     $.ajax({
         url: "/movies?zip=" + loc.postal_code + "&date=" + search_date,
-        success: movie_data,
+        success: movie_data
     });
 }
 
