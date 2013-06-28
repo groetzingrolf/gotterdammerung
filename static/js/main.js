@@ -117,10 +117,10 @@ function seatgeek_data (data) {
     $('#container').isotope({
       // options
         itemSelector : '.flip-container',
-        layoutMode : 'masonry',
+        layoutMode : 'perfectMasonry',
         masonry: {
             columnWidth: COL_WIDTH,
-            gutterWidth: PADDING,
+            rowHeight: COL_WIDTH,
         },
         getSortData: {
             score: function($elem) {
