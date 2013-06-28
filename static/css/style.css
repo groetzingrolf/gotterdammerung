@@ -2,12 +2,19 @@ body {
   background-image: url('/static/img/top-bar.png'), url('/static/img/background-left.png'), url('/static/img/background-right.png'), url('/static/img/background.png');
   background-repeat: repeat-x, repeat-y, repeat-y, repeat;
   background-position: center top, left center,  right center, center center;
+  font-family: "museo-sans",sans-serif;
 }
 #logo {
   width: 600px;
   height: 200px;
   background: url('/static/img/logo.png');
   margin: 50px auto 5px;
+}
+.filter {
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+  width: 1000px;
 }
 .filter h2 {
   font-family: "museo-sans",sans-serif;
@@ -236,4 +243,48 @@ body {
   font-weight: 100;
   line-height: 36px;
   font-family: "museo-sans",sans-serif;
+}
+#type-select {
+  background: url("/static/img/arrow.png") no-repeat scroll left top transparent;
+  font-size: 23px;
+  font-weight: 700;
+  left: 185px;
+  padding-left: 35px;
+  position: absolute;
+  text-align: left;
+  top: 64px;
+  width: 595px;
+  height: 22px;
+  padding-top: 6px;
+}
+#type-select ul {
+  list-style: none;
+  margin: 0;
+}
+#type-select ul li {
+  float: left;
+  line-height: 24px;
+  margin-right: 22px;
+  padding-left: 8px;
+    -webkit-transition: all 0.15s ease-in;
+  -o-transition: all 0.15s ease-in;
+  transition: all 0.15s ease-in;
+}
+#type-select ul li:hover {
+  border-left: 4px solid #9b4ddc;
+}
+#type-select ul li a {
+  color: #F6EBFF;
+  text-decoration: none;
+  position: relative;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.15s ease-in;
+  -o-transition: all 0.15s ease-in;
+  transition: all 0.15s ease-in;
+}
+#type-select ul li a:hover {
+  color: #fff;
+}
+#type-select ul li a:active {
+  top: 1px;
 }
