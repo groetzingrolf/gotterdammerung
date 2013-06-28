@@ -207,7 +207,9 @@ function init () {
 
     function showTypes() {
         $("#container").animate({ top: '+=20' }, function() {
-            $('#type-select').fadeIn();
+            $('#type-select').fadeIn(function() {
+                $('#type-select ul').show().addClass('lightSpeedIn');
+            });
         });
         $('#filter-type').unbind('click').click(hideTypes);
     }
