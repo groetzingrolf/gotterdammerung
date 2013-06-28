@@ -9,7 +9,7 @@ COL_WIDTH = 200;
 PADDING = 5;
 IMG_WIDTH = COL_WIDTH - 2 * PADDING;
 
-function build_card (score, type, event_name, event_venue, event_image, callback, event_url) {
+function build_card (score, type, event_name, event_venue, event_image, callback, event_url, movie_info) {
     var img = new Image();
     $(img).load(function() {
         var width = this.width;
@@ -60,9 +60,23 @@ function build_card (score, type, event_name, event_venue, event_image, callback
         front.append($("<div>").addClass("img-div").css("background-image", "url('" + event_image + "')").css("width", width).css("height", height));
 
         var expanded = $("<div class='event-info-expanded'>");
-        expanded.append($("<h3>").text(event_name));
-        if(event_venue) expanded.append($("<p>").text(event_venue));
-        if(event_url) expanded.append($("<a target='_blank' href='" + event_url + "'>").text("GET TICKETS"));
+        if(event_name) {
+            expanded.append($("<h3>").text(event_name));
+        } else if(movie_info) {
+            console.log(movie_info);
+            expanded.append($("<h3>").text(movie_info.name));
+        }
+        if(event_venue) {
+            expanded.append($("<p>").text(event_venue));
+        } else if(movie_info) {
+            expanded.append($("<p>").text("RT: " + movie_info.score + "%"));
+        }
+        if(event_url) {
+            expanded.append($("<a target='_blank' href='" + event_url + "'>").text("GET TICKETS"));
+        } else if(movie_info) {
+            var movie_url = "http://www.google.com/movies?near=" + encodeURIComponent($('#filter-location').text()) + "&q=" + movie_info.name;
+            expanded.append($("<a target='_blank' href='" + movie_url + "'>").text("GET TICKETS"));
+        }
 
         var flipped = $("<div>").addClass("event").addClass("flipped").css("width", width).css("height", height);
         flipped.append(expanded);
@@ -87,7 +101,7 @@ function add_card(card) {
 function movie_data(data) {
     for (var i = 0; i < data.movies.length; i += 1) {
         var movie = data.movies[i];
-        build_card(Math.max(movie.score - 30, 0), "movies", null, null, movie.image, add_card);
+        build_card(Math.max(movie.score - 30, 0), "movies", null, null, movie.image, add_card, null, movie);
     }
 }
 
