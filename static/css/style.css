@@ -16,7 +16,8 @@ body {
   text-align: center;
   width: 1000px;
 }
-#hidden-resizer2 { /* need same settings for same width */
+#hidden-resizer2 {
+  /* need same settings for same width */
   font-family: "museo-sans",sans-serif;
   font-size: 32px;
   letter-spacing: 0.04em;
@@ -46,7 +47,7 @@ body {
   position: relative;
 }
 .filter span.filter:hover {
-	border-bottom: 4px solid #b274e5;
+  border-bottom: 4px solid #b274e5
 }
 .filter span:active {
   top: 1px
@@ -115,7 +116,7 @@ body {
   white-space: nowrap;
 }
 .event-info h4 {
- color: #C0BCC2;
+  color: #C0BCC2;
   font-size: 17px;
   font-weight: 100;
   line-height: 18px;
@@ -258,7 +259,7 @@ body {
   left: 0;
 }
 .img-div {
-  background-size: cover;
+  background-size: cover
 }
 #type-select {
   background: url("/static/img/arrow.png") no-repeat scroll left top transparent;
@@ -282,15 +283,15 @@ body {
   line-height: 24px;
   margin-right: 22px;
   padding-left: 8px;
-    -webkit-transition: all 0.15s ease-in;
+  -webkit-transition: all 0.15s ease-in;
   -o-transition: all 0.15s ease-in;
   transition: all 0.15s ease-in;
 }
 #type-select ul li.active {
-    display: none;
+  display: none
 }
 #type-select ul li:hover {
-  border-left: 4px solid #9b4ddc;
+  border-left: 4px solid #9b4ddc
 }
 #type-select ul li a {
   color: #F6EBFF;
@@ -302,10 +303,10 @@ body {
   transition: all 0.15s ease-in;
 }
 #type-select ul li a:hover {
-  color: #fff;
+  color: #fff
 }
 #type-select ul li a:active {
-  top: 1px;
+  top: 1px
 }
 #filter-time-input-wrap {
   left: 650px;
@@ -328,8 +329,8 @@ input.filter-input, #hidden-resizer2 {
   font-size: 32px;
   font-family: "museo-sans",sans-serif;
   outline: none;
-   -webkit-appearance: none;
-   box-shadow: none;
+  -webkit-appearance: none;
+  box-shadow: none;
 }
 input.filter-input:focus {
   outline-color: transparent;
@@ -342,8 +343,36 @@ input.filter-input:focus {
   display: inline-block;
   width: 100px;
 }
-.replaceable {
-  padding-bottom: 1px;
+#filter-location-input {
+  width: 300px
 }
-::-webkit-input-placeholder { opacity: 0; }
-:-moz-placeholder { opacity: 0; }
+.replaceable {
+  padding-bottom: 1px
+}
+::-webkit-input-placeholder {
+  opacity: 0
+}
+:-moz-placeholder {
+  opacity: 0
+}
+.pac-container:after {
+  content: none !important
+}
+.pac-container {
+  background-color: rgba(82,29,125,.7) !important;
+  border: 1px solid rgba(82,29,125,.25);
+  overflow: hidden;
+  border-radius: 4px;
+  padding: 5px 6px;
+  color: #efe9f4;
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 27px;
+  box-shadow: 0 1px 16px rgba(0,0,0,.3);
+}
+.pac-item {
+  background-color: rgba(82,29,125,.7) !important
+}
+.pac-selcted {
+  background-color: none !important
+}

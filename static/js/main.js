@@ -222,11 +222,13 @@ function init () {
         if (new_date) {
             val = $(this).val();
         }
+    });
+    $('#filter-time-input, #filter-location-input').blur(function() {
         // Something this hacky deserves a hacky variable name
         var resizer2 = $("#hidden-resizer2");
-        resizer2.text(val);
-        $('#filter-time-input-wrap').hide();
-        $('#filter-time').text(val).width(resizer2.outerWidth(true)).show();
+        resizer2.text($(this).val());
+        $(this).parent().hide();
+        $(this).parent().siblings(".filter").text($(this).val()).width(resizer2.outerWidth(true) - 16);
     });
     $('#filter-location').click(function() {
         $(this).html("&nbsp;").width(300).css({'display': 'inline-block'});
