@@ -35,7 +35,7 @@ function build_card (event_name, event_venue, event_image, callback) {
 }
 
 function add_card(card) {
-    $("#container").append(card);
+    $('#container').isotope('insert', card);
 }
 
 function movie_data(data) {
@@ -69,6 +69,12 @@ function seatgeek_data (data) {
 
     $("#location").show();
 
+    $('#container').isotope({
+      // options
+      itemSelector : '.event',
+      layoutMode : 'fitRows'
+    });
+
     for (var i = 0; i < data.events.length; i += 1) {
         var event = data.events[i];
         var image = null;
@@ -86,12 +92,6 @@ function seatgeek_data (data) {
         }
         build_card(event.title, event.venue.name, image, add_card);
     }
-
-    $('#container').isotope({
-      // options
-      itemSelector : '.event',
-      layoutMode : 'fitRows'
-    });
 }
 
 function init () {
