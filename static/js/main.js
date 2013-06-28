@@ -44,7 +44,6 @@ function build_card (score, event_name, event_venue, event_image, callback) {
           resizer.css("font-size", size - 1);
         }
         size = parseInt(resizer.css("font-size"), 10);
-        console.log(size);
         $("#target-location").css("font-size", size).html(resizer.html());
 
         var front = $("<div>").addClass("event").addClass("front").css("width", width).css("height", height);
@@ -165,10 +164,33 @@ function init () {
         jsonpCallback: "seatgeek_data"
       });
 
-    $('#filter-type').click(function() {
+    function showTypes() {
         $("#container").transition({ y: '35px' }, function() {
-            $('#type-select').fadeIn();
+            $('#type-select').show().transition({opacity: 1.0});
         });
+        $('#filter-type').unbind('click').click(hideTypes);
+    }
+    function hideTypes() {
+        $('#type-select').transition({opacity: 0}, function () {
+            $('#type-select').hide();
+            $("#container").transition({ y: '-35px' });
+        });
+        $('#filter-type').unbind('click').click(showTypes);
+    }
+    $('#filter-type').click(showTypes);
+
+    $('#type-select .choice').click(function() {
+        var choice = $(this).attr("data-choice");
+        var verb = $(this).attr("data-verb");
+        var choice_display = choice.replace(/^./, function (char) {
+            return char.toUpperCase();
+        });
+        $("#filter-type").text(choice_display);
+        $(".verb").text(verb);
+        $("#type-select li.active").removeClass("active");
+        $(this).parent().addClass("active");
+        hideTypes();
+        return false;
     });
 }
 
