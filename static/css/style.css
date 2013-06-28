@@ -70,19 +70,6 @@ body {
   background: #000;
   opacity: 0;
 }
-.event img {
-  border: 1px solid rgba(1,0,1,.3);
-  /* stroke */
-  -webkit-border-radius: 4px;
-  border-radius: 4px;
-  /* border radius */
-  -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  /* prevents bg color from leaking outside the border */
-  -webkit-box-shadow: 0 1px 5px rgba(1,0,1,.32);
-  box-shadow: 0 1px 5px rgba(1,0,1,.32);
-}
 .event-info {
   position: absolute;
   bottom: -1px;
@@ -265,7 +252,15 @@ body {
   left: 0;
 }
 .img-div {
-  background-size: cover
+  background-size: cover;
+  border: 1px solid rgba(1,0,1,.3);
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-box-shadow: 0 1px 5px rgba(1,0,1,.32);
+  box-shadow: 0 1px 5px rgba(1,0,1,.32);
 }
 #type-select {
   background: url("/static/img/arrow.png") no-repeat scroll left top transparent;
