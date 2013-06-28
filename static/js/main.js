@@ -2,7 +2,7 @@ var SG_KEY = "NjkwMjR8MTM3MjM2MjU1OA";
 
 var loc = null;
 var type = "all";
-var search_date = new Date();
+var search_date = Date.today();
 search_date = search_date.getFullYear() + "-" + (search_date.getMonth() + 1) + "-" + search_date.getDate();
 
 COL_WIDTH = 200;
@@ -103,32 +103,9 @@ function load_movies () {
 function seatgeek_data (data) {
     if (!data || !data.meta || !data.meta.geolocation) {
         alert("SG API issue.");
-        return;
+        return false;
     }
-    if (!loc || loc.postal_code != data.meta.geolocation.postal_code) {
-        loc = data.meta.geolocation;
-        $("#filter-location").text(loc.display_name);
-        load_movies();
-    }
-
     $("#location").show();
-
-    $('#container').isotope({
-      // options
-        itemSelector : '.flip-container',
-        layoutMode : 'perfectMasonry',
-        perfectMasonry: {
-            columnWidth: COL_WIDTH,
-            rowHeight: COL_WIDTH,
-        },
-        getSortData: {
-            score: function($elem) {
-                return parseFloat($elem.attr("data-score"));
-            }
-        },
-        sortBy: "score",
-        sortAscending: false,
-    });
 
     for (var i = 0; i < data.events.length; i += 1) {
         var event = data.events[i];
@@ -153,22 +130,65 @@ function seatgeek_data (data) {
         }
         build_card(100 * event.score, type, event.title, event.venue.name, image, add_card);
     }
+    return true
 }
 
-function init () {
-	$('.overlay').hover(function() {
-		$(this).animate({ opacity: 0.17 });
-	}, function() {
-		$(this).animate({ opacity: 0 });
-	});
+function seatgeek_data_location (data) {
+    if (seatgeek_data(data)) {
+        if (!loc || loc.postal_code != data.meta.geolocation.postal_code) {
+            loc = data.meta.geolocation;
+            $("#filter-location").text(loc.display_name);
+            load_movies();
+        }
+    }
+}
+
+// If have_location is false we need to do SG request first to get location info, then the rest.
+function reloadEvents(have_location) {
+    $("#container").isotope("remove", $(".flip-container"));
+    var callback = "seatgeek_data_location";
+    if (have_location) {
+        callback = "seatgeek_data";
+    }
 
     var url = "http://api.seatgeek.com/2/events?datetime_local=" + search_date + "&geoip=true&per_page=1000&sort=score.desc&client_id=" + SG_KEY;
     $.ajax({
         url: url,
         dataType: 'jsonp',
         jsonp: 'callback',
-        jsonpCallback: "seatgeek_data"
-      });
+        jsonpCallback: callback,
+    });
+
+    if (have_location) {
+        load_movies();
+    }
+}
+
+function init () {
+    $('#container').isotope({
+      // options
+        itemSelector : '.flip-container',
+        layoutMode : 'perfectMasonry',
+        perfectMasonry: {
+            columnWidth: COL_WIDTH,
+            rowHeight: COL_WIDTH,
+        },
+        getSortData: {
+            score: function($elem) {
+                return parseFloat($elem.attr("data-score"));
+            }
+        },
+        sortBy: "score",
+        sortAscending: false,
+    });
+
+	$('.overlay').hover(function() {
+		$(this).animate({ opacity: 0.17 });
+	}, function() {
+		$(this).animate({ opacity: 0 });
+	});
+
+    reloadEvents(false);
 
     function showTypes() {
         $("#container").transition({ y: '35px' }, function() {
@@ -208,6 +228,7 @@ function init () {
     $('#filter-time').click(function() {
         old_time = $(this).text();
         $(this).html("&nbsp;").width(200);
+        $('#filter-time-input').val("");
         $('#filter-time-input-wrap').show();
         $('#filter-time-input').focus();
     });
@@ -219,8 +240,19 @@ function init () {
     $('#filter-time-input').blur(function() {
         var new_date = Date.parse($(this).val());
         var val = old_time;
+
         if (new_date) {
-            val = $(this).val();
+            new_search_date = new_date.getFullYear() + "-" + (new_date.getMonth() + 1) + "-" + new_date.getDate();
+            // Only compute if different and in future
+            if (new_search_date != search_date) {
+                var today =  Date.today();
+                if (new_date.getTime() - today.getTime() >= 0) {
+                    console.log("future");
+                    search_date = new_search_date;
+                    reloadEvents(true);
+                    val = displayDate(new_date);
+                }
+            }
         }
         // Something this hacky deserves a hacky variable name
         var resizer2 = $("#hidden-resizer2");
@@ -228,6 +260,24 @@ function init () {
         $('#filter-time-input-wrap').hide();
         $('#filter-time').text(val).width(resizer2.outerWidth(true)).show();
     });
+}
+
+function displayDate (new_date) {
+    var one_day = 1000 * 60 * 60 * 24;
+    var today =  Date.today();
+    var days = Math.ceil((new_date.getTime() - today.getTime()) / one_day);
+
+    if (days == 0) {
+        return "today";
+    } else if (days == 1) {
+        return "tomorrow";
+    }else {
+        var ret = new_date.toString("dddd, MMMM d");
+        if (new_date.getFullYear() > today.getFullYear()) {
+            ret += ", " + new_date.getFullYear();
+        }
+        return ret
+    }
 }
 
 $(init);
