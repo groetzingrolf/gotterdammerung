@@ -19,7 +19,7 @@ body {
   font-weight: 100;
   text-shadow: 0 1px 1px rgba(0,0,0,0.13);
 }
-.filter span {
+.filter span.filter {
   color: #fff;
   letter-spacing: 0.04em;
   font-weight: 700;
