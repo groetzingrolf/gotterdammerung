@@ -259,8 +259,8 @@ body {
   -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
-  -webkit-box-shadow: 0 1px 5px rgba(1,0,1,.32);
-  box-shadow: 0 1px 5px rgba(1,0,1,.32);
+  -webkit-box-shadow: 0 1px 5px rgba(1,0,1,.32), inset 0 1px 1px rgba(255,255,255,.2), inset 0 0 1px rgba(255,255,255,0.7);
+  box-shadow: 0 1px 5px rgba(1,0,1,.32), inset 0 1px 1px rgba(255,255,255,.2), inset 0 0 1px rgba(255,255,255,0.7);
 }
 #type-select {
   background: url("/static/img/arrow.png") no-repeat scroll left top transparent;
