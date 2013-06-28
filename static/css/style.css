@@ -306,7 +306,12 @@ body {
   position: absolute;
   top: 0px;
 }
-#filter-time-input, #hidden-resizer2 {
+#filter-location-input-wrap {
+  left: 432px;
+  position: absolute;
+  top: 0px;
+}
+input.filter-input, #hidden-resizer2 {
   background: none;
   border: 0;
   padding: 9px;
@@ -320,7 +325,7 @@ body {
    -webkit-appearance: none;
    box-shadow: none;
 }
-#filter-time-input:focus {
+input.filter-input:focus {
   outline-color: transparent;
   outline-style: none;
   -webkit-appearance: none;
@@ -328,7 +333,11 @@ body {
   box-shadow: none;
 }
 #filter-time {
-  width: 100px;
   display: inline-block;
+  width: 100px;
+}
+.replaceable {
   padding-bottom: 1px;
 }
+::-webkit-input-placeholder { opacity: 0; }
+:-moz-placeholder { opacity: 0; }

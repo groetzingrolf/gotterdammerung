@@ -113,22 +113,22 @@ function seatgeek_data (data) {
 
     $("#location").show();
 
-    $('#container').isotope({
-      // options
-        itemSelector : '.flip-container',
-        layoutMode : 'perfectMasonry',
-        perfectMasonry: {
-            columnWidth: COL_WIDTH,
-            rowHeight: COL_WIDTH,
-        },
-        getSortData: {
-            score: function($elem) {
-                return parseFloat($elem.attr("data-score"));
-            }
-        },
-        sortBy: "score",
-        sortAscending: false,
-    });
+    // $('#container').isotope({
+    //   // options
+    //     itemSelector : '.flip-container',
+    //     layoutMode : 'perfectMasonry',
+    //     perfectMasonry: {
+    //         columnWidth: COL_WIDTH,
+    //         rowHeight: COL_WIDTH,
+    //     },
+    //     getSortData: {
+    //         score: function($elem) {
+    //             return parseFloat($elem.attr("data-score"));
+    //         }
+    //     },
+    //     sortBy: "score",
+    //     sortAscending: false,
+    // });
 
     for (var i = 0; i < data.events.length; i += 1) {
         var event = data.events[i];
@@ -217,6 +217,12 @@ function init () {
         $('#filter-time').html($(this).val()).show().width(resizer2.width());
         console.log(Date.parse($(this).val()));
     });
+    $('#filter-location').click(function() {
+        $(this).html("&nbsp;").width(300).css({'display': 'inline-block'});
+        $('#filter-location-input-wrap').show();
+        $('#filter-location-input').focus();
+    });
+    $('#filter-location-input').geocomplete();
 }
 
 $(init);
