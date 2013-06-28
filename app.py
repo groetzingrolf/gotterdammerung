@@ -22,6 +22,7 @@ import requests.exceptions
 
 ROTTEN_TOMATOES_KEY = "exr5fbr3d23vvjtdnb6tjpgb"
 FORECAST_KEY = "0b40ae4519f7f08f607f77c3b5ab79f2"
+SG_KEY = "NjkwMjR8MTM3MjM2MjU1OA"
 
 
 def respond(doc, status=200):
