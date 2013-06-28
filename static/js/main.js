@@ -9,7 +9,7 @@ COL_WIDTH = 200;
 PADDING = 5;
 IMG_WIDTH = COL_WIDTH - 2 * PADDING;
 
-function build_card (score, event_name, event_venue, event_image, callback) {
+function build_card (score, type, event_name, event_venue, event_image, callback) {
     var img = new Image();
     $(img).load(function() {
         var width = this.width;
@@ -69,7 +69,7 @@ function build_card (score, event_name, event_venue, event_image, callback) {
         flipper.append(front);
         flipper.append(flipped);
 
-        var card = $("<div>").addClass("flip-container").css("width", width).css("height", height).attr("data-score", score);
+        var card = $("<div>").addClass("flip-container").addClass(type).css("width", width).css("height", height).attr("data-score", score);
         card.append(flipper);
 
         callback(card);
@@ -85,7 +85,7 @@ function add_card(card) {
 function movie_data(data) {
     for (var i = 0; i < data.movies.length; i += 1) {
         var movie = data.movies[i];
-        build_card(Math.max(movie.score - 40, 0), null, null, movie.image, add_card);
+        build_card(Math.max(movie.score - 40, 0), "movies", null, null, movie.image, add_card);
     }
 }
 
@@ -145,7 +145,13 @@ function seatgeek_data (data) {
         if (!image) {
             continue;
         }
-        build_card(100 * event.score, event.title, event.venue.name, image, add_card);
+        var type = "concerts";
+        if (event.taxonomies[0].name == "theater") {
+            type = "theater";
+        } else if (event.taxonomies[0].name == "sports") {
+            type = "games";
+        }
+        build_card(100 * event.score, type, event.title, event.venue.name, image, add_card);
     }
 }
 
@@ -156,7 +162,7 @@ function init () {
 		$(this).animate({ opacity: 0 });
 	});
 
-    var url = "http://api.seatgeek.com/2/events?datetime_local=" + search_date + "&geoip=true&per_page=100&sort=score.desc&client_id=" + SG_KEY;
+    var url = "http://api.seatgeek.com/2/events?datetime_local=" + search_date + "&geoip=true&per_page=1000&sort=score.desc&client_id=" + SG_KEY;
     $.ajax({
         url: url,
         dataType: 'jsonp',
@@ -190,6 +196,12 @@ function init () {
         $("#type-select li.active").removeClass("active");
         $(this).parent().addClass("active");
         hideTypes();
+        if (choice == "everything") {
+            choice = "";
+        } else {
+            choice = "." + choice;
+        }
+        $("#container").isotope({ filter: choice });
         return false;
     });
 }
