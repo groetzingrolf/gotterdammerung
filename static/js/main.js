@@ -116,11 +116,11 @@ function load_movies () {
 }
 
 function weather_data(data) {
-    $("#weather").text(data.weather.summary).attr("data-weather", data.weather.icon).show();
+    $("#weather").text(data.weather.summary).attr("data-weather", data.weather.icon).fadeIn();
 }
 
 function load_weather () {
-    $("#weather").hide();
+    $("#weather").fadeOut();
     if (!loc || !loc.lat) {
         alert("missing location information");
         return;
