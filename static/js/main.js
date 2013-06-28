@@ -173,15 +173,14 @@ function init () {
       });
 
     function showTypes() {
-        $("#container").transition({ y: '35px' }, function() {
-            $('#type-select').show().transition({opacity: 1.0});
+        $("#container").animate({ top: '+=20' }, function() {
+            $('#type-select').fadeIn();
         });
         $('#filter-type').unbind('click').click(hideTypes);
     }
     function hideTypes() {
-        $('#type-select').transition({opacity: 0}, function () {
-            $('#type-select').hide();
-            $("#container").transition({ y: '-35px' });
+        $('#type-select').fadeOut(function () {
+            $("#container").animate({ top: '-=20' });
         });
         $('#filter-type').unbind('click').click(showTypes);
     }
