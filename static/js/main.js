@@ -9,7 +9,7 @@ COL_WIDTH = 200;
 PADDING = 5;
 IMG_WIDTH = COL_WIDTH - 2 * PADDING;
 
-function build_card (score, type, event_name, event_venue, event_image, callback) {
+function build_card (score, type, event_name, event_venue, event_image, callback, event_url) {
     var img = new Image();
     $(img).load(function() {
         var width = this.width;
@@ -59,8 +59,10 @@ function build_card (score, type, event_name, event_venue, event_image, callback
         front.append($("<div>").addClass("overlay"));
         front.append($("<div>").addClass("img-div").css("background-image", "url('" + event_image + "')").css("width", width).css("height", height));
 
-        var expanded = $("<div>");
+        var expanded = $("<div class='event-info-expanded'>");
         expanded.append($("<h3>").text(event_name));
+        if(event_venue) expanded.append($("<p>").text(event_venue));
+        if(event_url) expanded.append($("<a target='_blank' href='" + event_url + "'>").text("GET TICKETS"));
 
         var flipped = $("<div>").addClass("event").addClass("flipped").css("width", width).css("height", height);
         flipped.append(expanded);
@@ -128,7 +130,7 @@ function seatgeek_data (data) {
         } else if (event.taxonomies[0].name == "sports") {
             type = "games";
         }
-        build_card(100 * event.score, type, event.title, event.venue.name, image, add_card);
+        build_card(100 * event.score, type, event.title, event.venue.name, image, add_card, event.url);
     }
     return true
 }
@@ -254,12 +256,20 @@ function init () {
                 }
             }
         }
+    });
+    $('#filter-time-input, #filter-location-input').blur(function() {
         // Something this hacky deserves a hacky variable name
         var resizer2 = $("#hidden-resizer2");
-        resizer2.text(val);
-        $('#filter-time-input-wrap').hide();
-        $('#filter-time').text(val).width(resizer2.outerWidth(true)).show();
+        resizer2.text($(this).val());
+        $(this).parent().hide();
+        $(this).parent().siblings(".filter").text($(this).val()).width(resizer2.outerWidth(true) - 16);
     });
+    $('#filter-location').click(function() {
+        $(this).html("&nbsp;").width(300).css({'display': 'inline-block'});
+        $('#filter-location-input-wrap').show();
+        $('#filter-location-input').focus();
+    });
+    $('#filter-location-input').geocomplete();
 }
 
 function displayDate (new_date) {
