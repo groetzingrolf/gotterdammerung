@@ -139,21 +139,34 @@ function seatgeek_data_location (data) {
     if (seatgeek_data(data)) {
         if (!loc || loc.postal_code != data.meta.geolocation.postal_code) {
             loc = data.meta.geolocation;
-            $("#filter-location").text(loc.display_name);
+
+            // Something this hacky deserves a hacky variable name
+            var resizer2 = $("#hidden-resizer2");
+            resizer2.text(loc.display_name);
+            $("#filter-location").text(loc.display_name).width(resizer2.outerWidth(true) - 16);
             load_movies();
         }
     }
 }
 
 // If have_location is false we need to do SG request first to get location info, then the rest.
-function reloadEvents(have_location) {
+function reloadEvents(have_location, lat, lon) {
     $("#container").isotope("remove", $(".flip-container"));
     var callback = "seatgeek_data_location";
     if (have_location) {
         callback = "seatgeek_data";
     }
 
-    var url = "http://api.seatgeek.com/2/events?datetime_local=" + search_date + "&geoip=true&per_page=1000&sort=score.desc&client_id=" + SG_KEY;
+    if (loc && !lat) {
+        lat = loc.lat;
+        lon = loc.lon;
+    }
+    var url = "http://api.seatgeek.com/2/events?datetime_local=" + search_date + "&per_page=1000&sort=score.desc&client_id=" + SG_KEY;
+    if (lat) {
+        url += "&lat=" + lat + "&lon=" + lon;
+    } else {
+        url += "&geoip=true";
+    }
     $.ajax({
         url: url,
         dataType: 'jsonp',
@@ -190,7 +203,7 @@ function init () {
 		$(this).animate({ opacity: 0 });
 	});
 
-    reloadEvents(false);
+    reloadEvents(false, null, null);
 
     function showTypes() {
         $("#container").animate({ top: '+=20' }, function() {
@@ -252,7 +265,7 @@ function init () {
                 if (new_date.getTime() - today.getTime() >= 0) {
                     console.log("future");
                     search_date = new_search_date;
-                    reloadEvents(true);
+                    reloadEvents(true, null, null);
                     val = displayDate(new_date);
                 }
             }
@@ -269,11 +282,18 @@ function init () {
         $('#filter-location-input').focus();
     });
     $('#filter-location-input').blur(function() {
-        // Something this hacky deserves a hacky variable name
-        var resizer2 = $("#hidden-resizer2");
-        resizer2.text($(this).val());
-        $(this).parent().hide();
-        $("#filter-location").text($(this).val()).width(resizer2.outerWidth(true) - 16);
+        $('#filter-location-input').bind("geocode:result", function(event, result){
+            var lat = result.geometry.location.lat();
+            var lon = result.geometry.location.lng();
+            reloadEvents(false, lat, lon);
+            $(this).parent().hide();
+        });
+    });
+    $('#filter-location').click(function() {
+        $(this).html("&nbsp;").width(300).css({'display': 'inline-block'});
+        $('#filter-location-input').val("");
+        $('#filter-location-input-wrap').show();
+        $('#filter-location-input').focus();
     });
     $('#filter-location-input').geocomplete();
 }
