@@ -167,22 +167,22 @@ function reloadEvents(have_location) {
 }
 
 function init () {
-    // $('#container').isotope({
-    //   // options
-    //     itemSelector : '.flip-container',
-    //     layoutMode : 'perfectMasonry',
-    //     perfectMasonry: {
-    //         columnWidth: COL_WIDTH,
-    //         rowHeight: COL_WIDTH,
-    //     },
-    //     getSortData: {
-    //         score: function($elem) {
-    //             return parseFloat($elem.attr("data-score"));
-    //         }
-    //     },
-    //     sortBy: "score",
-    //     sortAscending: false,
-    // });
+    $('#container').isotope({
+      // options
+        itemSelector : '.flip-container',
+        layoutMode : 'perfectMasonry',
+        perfectMasonry: {
+            columnWidth: COL_WIDTH,
+            rowHeight: COL_WIDTH,
+        },
+        getSortData: {
+            score: function($elem) {
+                return parseFloat($elem.attr("data-score"));
+            }
+        },
+        sortBy: "score",
+        sortAscending: false,
+    });
 
 	$('.overlay').hover(function() {
 		$(this).animate({ opacity: 0.17 });
@@ -232,8 +232,7 @@ function init () {
         old_time = $(this).text();
         $(this).html("&nbsp;").width(200);
         $('#filter-time-input').val("");
-        console.log($('#filter-time').position().left);
-        $('#filter-time-input-wrap').show().css({'left': $('#filter-time').position().left - 7 });
+        $('#filter-time-input-wrap').show().css({'left': $('#filter-time').position().left - 7});;
         $('#filter-time-input').focus();
     });
     $("#filter-time-input").keyup(function(e) {
@@ -266,7 +265,7 @@ function init () {
     });
     $('#filter-location').click(function() {
         $(this).html("&nbsp;").width(300).css({'display': 'inline-block'});
-        $('#filter-location-input-wrap').show().css({'left': $('#filter-location').position().left - 7 });
+        $('#filter-location-input-wrap').show().css({'left': $('#filter-location').position().left - 7});
         $('#filter-location-input').focus();
     });
     $('#filter-location-input').blur(function() {
