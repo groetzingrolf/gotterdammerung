@@ -5,6 +5,10 @@ var type = "all";
 var search_date = new Date();
 search_date = search_date.getFullYear() + "-" + (search_date.getMonth() + 1) + "-" + search_date.getDate();
 
+COL_WIDTH = 200;
+PADDING = 5;
+IMG_WIDTH = COL_WIDTH - 2 * PADDING;
+
 function build_card (score, event_name, event_venue, event_image, callback) {
     var img = new Image();
     $(img).load(function() {
@@ -12,22 +16,19 @@ function build_card (score, event_name, event_venue, event_image, callback) {
         var height = this.height;
 
         /* Some movie posters are huge and slow down the page quite a bit. */
-        if (width > 800 || height > 800) {
+        if (width > 1000 || height > 1000) {
             return;
         }
 
         /* Too small for a column. */
-        if (width < 180 || height < 180) {
+        if (width < IMG_WIDTH || height < IMG_WIDTH) {
             return;
         }
 
-        if (width < height && width > 300) {
-            height = height * 300 / width;
-            width = 300;
-        } else if (height < width && height > 300) {
-            width = width * 300 / height;
-            height = 300;
-        }
+        var width_mul = Math.min(2, Math.floor(Math.random() * Math.floor(width / IMG_WIDTH)));
+        var height_mul = Math.min(3, Math.floor(Math.random() * Math.floor(height / IMG_WIDTH)));
+        width = width_mul * COL_WIDTH + IMG_WIDTH;
+        height = height_mul * COL_WIDTH + IMG_WIDTH;
 
         // Determine what the largest possible size is that we can use for the
         // h3 text to keep it on one line
@@ -57,7 +58,7 @@ function build_card (score, event_name, event_venue, event_image, callback) {
             front.append(event_info);
         }
         front.append($("<div>").addClass("overlay"));
-        front.append($("<img>").attr("src", event_image).attr("width", width).attr("height", height));
+        front.append($("<div>").addClass("img-div").css("background-image", "url('" + event_image + "')").css("width", width).css("height", height));
 
         var expanded = $("<div>");
         expanded.append($("<h3>").text(event_name));
@@ -118,7 +119,8 @@ function seatgeek_data (data) {
         itemSelector : '.flip-container',
         layoutMode : 'masonry',
         masonry: {
-            columnWidth: 140,
+            columnWidth: COL_WIDTH,
+            gutterWidth: PADDING,
         },
         getSortData: {
             score: function($elem) {
