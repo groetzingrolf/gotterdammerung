@@ -10,6 +10,12 @@ function build_card (score, event_name, event_venue, event_image, callback) {
     $(img).load(function() {
         var width = this.width;
         var height = this.height;
+
+        /* Some movie posters are huge and slow down the page quite a bit. */
+        if (width > 800 || height > 800) {
+            return;
+        }
+
         if (width < height && width > 300) {
             height = height * 300 / width;
             width = 300;
