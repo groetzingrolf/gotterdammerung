@@ -63,7 +63,6 @@ function build_card (score, type, event_name, event_venue, event_image, callback
         if(event_name) {
             expanded.append($("<h3>").text(event_name));
         } else if(movie_info) {
-            console.log(movie_info);
             expanded.append($("<h3>").text(movie_info.name));
         }
         if(event_venue) {
