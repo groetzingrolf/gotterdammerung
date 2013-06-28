@@ -87,7 +87,7 @@ function seatgeek_data (data) {
 
     $('#container').isotope({
       // options
-        itemSelector : '.event',
+        itemSelector : '.flip-container',
         layoutMode : 'fitRows',
         getSortData: {
             score: function($elem) {
