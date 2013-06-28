@@ -197,6 +197,7 @@ body {
   -ms-perspective: 1000;
   -o-perspective: 1000;
   perspective: 1000;
+  padding: 5px;
 }
 /* flip the pane when hovered */
 .flip-container:hover .flipper, .flip-container.hover .flipper {
@@ -250,6 +251,9 @@ body {
   bottom: 0;
   left: 0;
 }
+.img-div {
+  background-size: cover;
+}
 #type-select {
   background: url("/static/img/arrow.png") no-repeat scroll left top transparent;
   font-size: 23px;
@@ -275,6 +279,9 @@ body {
     -webkit-transition: all 0.15s ease-in;
   -o-transition: all 0.15s ease-in;
   transition: all 0.15s ease-in;
+}
+#type-select ul li.active {
+    display: none;
 }
 #type-select ul li:hover {
   border-left: 4px solid #9b4ddc;

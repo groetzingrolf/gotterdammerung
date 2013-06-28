@@ -5,24 +5,30 @@ var type = "all";
 var search_date = new Date();
 search_date = search_date.getFullYear() + "-" + (search_date.getMonth() + 1) + "-" + search_date.getDate();
 
-function build_card (score, event_name, event_venue, event_image, callback) {
+COL_WIDTH = 200;
+PADDING = 5;
+IMG_WIDTH = COL_WIDTH - 2 * PADDING;
+
+function build_card (score, type, event_name, event_venue, event_image, callback) {
     var img = new Image();
     $(img).load(function() {
         var width = this.width;
         var height = this.height;
 
         /* Some movie posters are huge and slow down the page quite a bit. */
-        if (width > 800 || height > 800) {
+        if (width > 1000 || height > 1000) {
             return;
         }
 
-        if (width < height && width > 300) {
-            height = height * 300 / width;
-            width = 300;
-        } else if (height < width && height > 300) {
-            width = width * 300 / height;
-            height = 300;
+        /* Too small for a column. */
+        if (width < IMG_WIDTH || height < IMG_WIDTH) {
+            return;
         }
+
+        var width_mul = Math.min(2, Math.floor(Math.random() * Math.floor(width / IMG_WIDTH)));
+        var height_mul = Math.min(3, Math.floor(Math.random() * Math.floor(height / IMG_WIDTH)));
+        width = width_mul * COL_WIDTH + IMG_WIDTH;
+        height = height_mul * COL_WIDTH + IMG_WIDTH;
 
         // Determine what the largest possible size is that we can use for the
         // h3 text to keep it on one line
@@ -51,7 +57,7 @@ function build_card (score, event_name, event_venue, event_image, callback) {
             front.append(event_info);
         }
         front.append($("<div>").addClass("overlay"));
-        front.append($("<img>").attr("src", event_image).attr("width", width).attr("height", height));
+        front.append($("<div>").addClass("img-div").css("background-image", "url('" + event_image + "')").css("width", width).css("height", height));
 
         var expanded = $("<div>");
         expanded.append($("<h3>").text(event_name));
@@ -63,7 +69,7 @@ function build_card (score, event_name, event_venue, event_image, callback) {
         flipper.append(front);
         flipper.append(flipped);
 
-        var card = $("<div>").addClass("flip-container").css("width", width).css("height", height).attr("data-score", score);
+        var card = $("<div>").addClass("flip-container").addClass(type).css("width", width).css("height", height).attr("data-score", score);
         card.append(flipper);
 
         callback(card);
@@ -79,7 +85,7 @@ function add_card(card) {
 function movie_data(data) {
     for (var i = 0; i < data.movies.length; i += 1) {
         var movie = data.movies[i];
-        build_card(Math.max(movie.score - 40, 0), null, null, movie.image, add_card);
+        build_card(Math.max(movie.score - 40, 0), "movies", null, null, movie.image, add_card);
     }
 }
 
@@ -107,18 +113,22 @@ function seatgeek_data (data) {
 
     $("#location").show();
 
-    // $('#container').isotope({
-    //   // options
-    //     itemSelector : '.flip-container',
-    //     layoutMode : 'fitRows',
-    //     getSortData: {
-    //         score: function($elem) {
-    //             return parseFloat($elem.attr("data-score"));
-    //         }
-    //     },
-    //     sortBy: "score",
-    //     sortAscending: false,
-    // });
+    $('#container').isotope({
+      // options
+        itemSelector : '.flip-container',
+        layoutMode : 'perfectMasonry',
+        perfectMasonry: {
+            columnWidth: COL_WIDTH,
+            rowHeight: COL_WIDTH,
+        },
+        getSortData: {
+            score: function($elem) {
+                return parseFloat($elem.attr("data-score"));
+            }
+        },
+        sortBy: "score",
+        sortAscending: false,
+    });
 
     for (var i = 0; i < data.events.length; i += 1) {
         var event = data.events[i];
@@ -126,7 +136,7 @@ function seatgeek_data (data) {
         for (var j = 0; j < event.performers.length; j += 1) {
             if (event.performers[j].image) {
                 image = event.performers[j].image;
-                if (event.performers[j].images.mongo && Math.random() < 0.3) {
+                if (event.performers[j].images.mongo) {
                     image = event.performers[j].images.mongo;
                 }
                 break;
@@ -135,7 +145,13 @@ function seatgeek_data (data) {
         if (!image) {
             continue;
         }
-        build_card(100 * event.score, event.title, event.venue.name, image, add_card);
+        var type = "concerts";
+        if (event.taxonomies[0].name == "theater") {
+            type = "theater";
+        } else if (event.taxonomies[0].name == "sports") {
+            type = "games";
+        }
+        build_card(100 * event.score, type, event.title, event.venue.name, image, add_card);
     }
 }
 
@@ -146,7 +162,7 @@ function init () {
 		$(this).animate({ opacity: 0 });
 	});
 
-    var url = "http://api.seatgeek.com/2/events?datetime_local=" + search_date + "&geoip=true&per_page=100&sort=score.desc&client_id=" + SG_KEY;
+    var url = "http://api.seatgeek.com/2/events?datetime_local=" + search_date + "&geoip=true&per_page=1000&sort=score.desc&client_id=" + SG_KEY;
     $.ajax({
         url: url,
         dataType: 'jsonp',
@@ -154,10 +170,39 @@ function init () {
         jsonpCallback: "seatgeek_data"
       });
 
-    $('#filter-type').click(function() {
+    function showTypes() {
         $("#container").transition({ y: '35px' }, function() {
-            $('#type-select').fadeIn();
+            $('#type-select').show().transition({opacity: 1.0});
         });
+        $('#filter-type').unbind('click').click(hideTypes);
+    }
+    function hideTypes() {
+        $('#type-select').transition({opacity: 0}, function () {
+            $('#type-select').hide();
+            $("#container").transition({ y: '-35px' });
+        });
+        $('#filter-type').unbind('click').click(showTypes);
+    }
+    $('#filter-type').click(showTypes);
+
+    $('#type-select .choice').click(function() {
+        var choice = $(this).attr("data-choice");
+        var verb = $(this).attr("data-verb");
+        var choice_display = choice.replace(/^./, function (char) {
+            return char.toUpperCase();
+        });
+        $("#filter-type").text(choice_display);
+        $(".verb").text(verb);
+        $("#type-select li.active").removeClass("active");
+        $(this).parent().addClass("active");
+        hideTypes();
+        if (choice == "everything") {
+            choice = "";
+        } else {
+            choice = "." + choice;
+        }
+        $("#container").isotope({ filter: choice });
+        return false;
     });
     $('#filter-time').click(function() {
         $(this).html("&nbsp;").width(200);

@@ -13,15 +13,14 @@
   <body>
     <div id="logo"></div>
     <div class="filter">
-      <h2>
-        <span class="filter" id="filter-type">Everything</span> to do <span id="location" style="display: none;">in <span class="filter" id="filter-location">New York City</span> </span><span class="filter" id="filter-time">today</span><span id="filter-time-input-wrap" style="display: none;"><input type="text" name="filter-time-input" id="filter-time-input"></span>.
-      </h2>
-      <div id="type-select" style="display: none;">
+      <h2><span class="filter" id="filter-type">Everything</span> to <span class="verb">do</span> <span id="location" style="display: none;">in <span class="filter" id="filter-location">New York City</span> </span><span class="filter" id="filter-time">today</span><span id="filter-time-input-wrap" style="display: none;"><input type="text" name="filter-time-input" id="filter-time-input"></span>.
+      <div id="type-select" style="display: none; opacity: 0;">
         <ul>
-          <li><a id="filter-concerts" href="#">Concerts</a></li>
-          <li><a id="filter-games" href="#">Games</a></li>
-          <li><a id="filter-theater" href="#">Theater</a></li>
-          <li><a id="filter-movies" href="#">Movies</a></li>
+          <li class="active"><a class="choice" data-choice="everything" data-verb="do" href="#">Everything</a></li>
+          <li><a class="choice" data-choice="concerts" data-verb="see" href="#">Concerts</a></li>
+          <li><a class="choice" data-choice="games" data-verb="go to" href="#">Games</a></li>
+          <li><a class="choice" data-choice="theater" data-verb="partake of" href="#">Theater</a></li>
+          <li><a class="choice" data-choice="movies" data-verb="watch" href="#">Movies</a></li>
         </ul>
       </div>
     </div>
@@ -53,6 +52,7 @@
     <script src="/static/js/jquery-1.10.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script src="/static/js/jquery.isotope.min.js"></script>
+    <script src="/static/js/jquery.isotope.perfectmasonry.js"></script>
     <script src="/static/js/jquery.transit.min.js"></script>
     <script src="/static/js/date.js"></script>
     <script src="/static/js/main.js"></script>
