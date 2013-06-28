@@ -18,8 +18,25 @@ function build_card (event_name, event_venue, event_image, callback) {
             height = 300;
         }
 
+        // Determine what the largest possible size is that we can use for the
+        // h3 text to keep it on one line
+        var size = 28;
+        var desired_width = width - 50;
+        var resizer = $("#hidden-resizer");
+        resizer.css("font-size", 28);
+
+        resizer.html(event_name);
+
+        while((resizer.width() > desired_width) && (size > 19)) {
+          size = parseInt(resizer.css("font-size"), 10);
+          resizer.css("font-size", size - 1);
+        }
+        size = parseInt(resizer.css("font-size"), 10);
+        console.log(size);
+        $("#target-location").css("font-size", size).html(resizer.html());
+
         var event_info = $("<div>").addClass("event-info");
-        event_info.append($("<h3>").text(event_name));
+        event_info.append($("<h3>").text(event_name).css("font-size", size));
         if (event_venue) {
             event_info.append($("<h4>").text(event_venue));
         }
