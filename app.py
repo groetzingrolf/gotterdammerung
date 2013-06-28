@@ -77,6 +77,8 @@ def _movies(zip, date):
                 film_info = _film_info(film_id)
                 if not film_info:
                     continue
+                if "default" in film_info["posters"]["original"]:
+                    continue
                 result[film_id] = {"name": film_title,
                                    "image": film_info["posters"]["original"],
                                    "score": film_info["ratings"]["critics_score"],
