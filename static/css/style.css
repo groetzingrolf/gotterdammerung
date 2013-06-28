@@ -378,3 +378,12 @@ input.filter-input:focus {
 .pac-selcted {
   background-color: none !important
 }
+#from-sg {
+  margin-top: 47px;
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 111px;
+  height: 23px;
+  background-image: url('/static/img/from-sg.png');
+}
