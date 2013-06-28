@@ -87,7 +87,7 @@ function add_card(card) {
 function movie_data(data) {
     for (var i = 0; i < data.movies.length; i += 1) {
         var movie = data.movies[i];
-        build_card(Math.max(movie.score - 40, 0), "movies", null, null, movie.image, add_card);
+        build_card(Math.max(movie.score - 30, 0), "movies", null, null, movie.image, add_card);
     }
 }
 
@@ -277,10 +277,14 @@ function init () {
         $("#filter-time").text(val).width(resizer2.outerWidth(true) - 16);
     });
     $('#filter-location-input').blur(function() {
-        $('#filter-location-input').bind("geocode:result", function(event, result){
+        $('#filter-location-input').unbind().bind("geocode:result", function(event, result){
             var lat = result.geometry.location.lat();
             var lon = result.geometry.location.lng();
             reloadEvents(false, lat, lon);
+            // Something this hacky deserves a hacky variable name
+            var resizer2 = $("#hidden-resizer2");
+            resizer2.text($(this).val());
+            $("#filter-location").text($(this).val()).width(resizer2.outerWidth(true) - 16);
             $(this).parent().hide();
         });
     });
