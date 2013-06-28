@@ -5,11 +5,17 @@ var type = "all";
 var search_date = new Date();
 search_date = search_date.getFullYear() + "-" + (search_date.getMonth() + 1) + "-" + search_date.getDate();
 
-function build_card (event_name, event_venue, event_image, callback) {
+function build_card (score, event_name, event_venue, event_image, callback) {
     var img = new Image();
     $(img).load(function() {
         var width = this.width;
         var height = this.height;
+
+        /* Some movie posters are huge and slow down the page quite a bit. */
+        if (width > 800 || height > 800) {
+            return;
+        }
+
         if (width < height && width > 300) {
             height = height * 300 / width;
             width = 300;
@@ -35,16 +41,31 @@ function build_card (event_name, event_venue, event_image, callback) {
         console.log(size);
         $("#target-location").css("font-size", size).html(resizer.html());
 
-        var event_info = $("<div>").addClass("event-info");
-        event_info.append($("<h3>").text(event_name).css("font-size", size));
-        if (event_venue) {
-            event_info.append($("<h4>").text(event_venue));
-        }
+        var front = $("<div>").addClass("event").addClass("front").css("width", width).css("height", height);
 
-        var card = $("<div>").addClass("event").css("width", width).css("height", height);
-        card.append(event_info);
-        card.append($("<div>").addClass("overlay"));
-        card.append($("<img>").attr("src", event_image).attr("width", width).attr("height", height));
+        if (event_name) {
+            var event_info = $("<div>").addClass("event-info");
+            event_info.append($("<h3>").text(event_name).css("font-size", size));
+            if (event_venue) {
+                event_info.append($("<h4>").text(event_venue));
+            }
+            front.append(event_info);
+        }
+        front.append($("<div>").addClass("overlay"));
+        front.append($("<img>").attr("src", event_image).attr("width", width).attr("height", height));
+
+        var expanded = $("<div>");
+        expanded.append($("<h3>").text(event_name));
+
+        var flipped = $("<div>").addClass("event").addClass("flipped").css("width", width).css("height", height);
+        flipped.append(expanded);
+
+        var flipper = $("<div>").addClass("flipper");
+        flipper.append(front);
+        flipper.append(flipped);
+
+        var card = $("<div>").addClass("flip-container").css("width", width).css("height", height).attr("data-score", score);
+        card.append(flipper);
 
         callback(card);
     });
@@ -53,12 +74,13 @@ function build_card (event_name, event_venue, event_image, callback) {
 
 function add_card(card) {
     $('#container').isotope('insert', card);
+//    $('#container').append(card);
 }
 
 function movie_data(data) {
     for (var i = 0; i < data.movies.length; i += 1) {
         var movie = data.movies[i];
-        build_card(movie.name, null, movie.image, add_card);
+        build_card(Math.max(movie.score - 40, 0), null, null, movie.image, add_card);
     }
 }
 
@@ -88,8 +110,15 @@ function seatgeek_data (data) {
 
     $('#container').isotope({
       // options
-      itemSelector : '.event',
-      layoutMode : 'fitRows'
+        itemSelector : '.flip-container',
+        layoutMode : 'fitRows',
+        getSortData: {
+            score: function($elem) {
+                return parseFloat($elem.attr("data-score"));
+            }
+        },
+        sortBy: "score",
+        sortAscending: false,
     });
 
     for (var i = 0; i < data.events.length; i += 1) {
@@ -107,7 +136,7 @@ function seatgeek_data (data) {
         if (!image) {
             continue;
         }
-        build_card(event.title, event.venue.name, image, add_card);
+        build_card(100 * event.score, event.title, event.venue.name, image, add_card);
     }
 }
 
