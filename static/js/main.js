@@ -257,13 +257,18 @@ function init () {
                 }
             }
         }
+        // Something this hacky deserves a hacky variable name
+        var resizer2 = $("#hidden-resizer2");
+        resizer2.text(val);
+        $(this).parent().hide();
+        $("#filter-time").text(val).width(resizer2.outerWidth(true) - 16);
     });
-    $('#filter-time-input, #filter-location-input').blur(function() {
+    $('#filter-location-input').blur(function() {
         // Something this hacky deserves a hacky variable name
         var resizer2 = $("#hidden-resizer2");
         resizer2.text($(this).val());
         $(this).parent().hide();
-        $(this).parent().siblings(".filter").text($(this).val()).width(resizer2.outerWidth(true) - 16);
+        $("#filter-location").text($(this).val()).width(resizer2.outerWidth(true) - 16);
     });
     $('#filter-location').click(function() {
         $(this).html("&nbsp;").width(300).css({'display': 'inline-block'});
