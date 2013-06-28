@@ -116,7 +116,7 @@ function load_movies () {
 }
 
 function weather_data(data) {
-    $("#weather").text(data.weather.summary).attr("data-weather", data.weather.icon).fadeIn();
+//    $("#weather").text(data.weather.summary).attr("data-weather", data.weather.icon).fadeIn();
 }
 
 function load_weather () {
