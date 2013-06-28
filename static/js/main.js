@@ -49,6 +49,12 @@ function seatgeek_data (data) {
         var card = build_card(event.title, event.venue.name, image, w, h);
         $("#container").append(card);
     }
+
+    $('#container').isotope({
+      // options
+      itemSelector : '.event',
+      layoutMode : 'fitRows'
+    });
 }
 
 function init () {
