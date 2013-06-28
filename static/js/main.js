@@ -21,7 +21,6 @@ function init () {
 	});
 
     var d = search_date.getFullYear() + "-" + search_date.getMonth() + "-" + search_date.getDate();
-    alert(d);
     var url = "http://api.seatgeek.com/2/events?datetime_local=" + d + "&geoip=true&client_id=" + SG_KEY;
     $.ajax({
         url: url,
