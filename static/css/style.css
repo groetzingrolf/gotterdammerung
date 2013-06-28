@@ -93,3 +93,75 @@ body {
 	font-size: 17px;
 	line-height: 0;
 }
+.event.flipped {
+	border: 1px solid #000; /* stroke */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px; /* border radius */
+	-moz-background-clip: padding;
+	-webkit-background-clip: padding-box;
+	background-clip: padding-box; /* prevents bg color from leaking outside the border */
+	-moz-box-shadow: 0 1px 6px rgba(1, 0, 1, 0.32), 0 0 110px rgba(0, 0, 0, 0.7) inset, 0 -1px 2px 0 rgba(255, 255, 255, 0.52) inset;
+	-webkit-box-shadow: 0 1px 6px rgba(1, 0, 1, 0.32), 0 0 110px rgba(0, 0, 0, 0.7) inset, 0 -1px 2px 0 rgba(255, 255, 255, 0.52) inset;
+	box-shadow: 0 1px 6px rgba(1, 0, 1, 0.32), 0 0 110px rgba(0, 0, 0, 0.7) inset, 0 -1px 2px 0 rgba(255, 255, 255, 0.52) inset;
+	background: url('/static/img/flipped-background.png') repeat;
+}
+.event-info-expanded {
+	font-family: "museo-sans",sans-serif;
+	margin: 0 auto;
+	width: 100%;
+	text-align: center;
+	font-weight: 100;
+	text-shadow: 0 1px 1px rgba(1,0,1,.2);
+}
+.event-info-expanded h3 {
+	color: #fff;
+	font-size: 28px;
+	font-weight: 100;
+	padding-top: 16px;
+	padding-bottom: 8px;
+}
+.event-info-expanded p {
+	color: #ddd6e1;
+	font-size: 16px;
+}
+.event-info-expanded h3 + p {
+	margin-bottom: 2px;
+}
+.event-info-expanded a {
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px; /* border radius */
+	background-color: #fceb97;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(252, 235, 151)), to(rgb(225, 207, 113)));
+	background-image: -webkit-linear-gradient(top, rgb(252, 235, 151), rgb(225, 207, 113));
+	background-image: -moz-linear-gradient(top, rgb(252, 235, 151), rgb(225, 207, 113));
+	background-image: -o-linear-gradient(top, rgb(252, 235, 151), rgb(225, 207, 113));
+	background-image: -ms-linear-gradient(top, rgb(252, 235, 151), rgb(225, 207, 113));
+	background-image: linear-gradient(top, rgb(252, 235, 151), rgb(225, 207, 113));
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#fceb97', EndColorStr='#e1cf71');
+	display: block;
+	height: 30px;
+	margin: 32px auto 10px;
+	width: 140px;
+	text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+	color: #2a0e3e;
+	font-weight: 500;
+	line-height: 28px;
+	position: relative;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 1px 1px rgba(255, 255, 255, 0.5) inset;
+}
+.event-info-expanded a:hover {
+	background-color: #f9eeb9;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(249, 238, 185)), to(rgb(239, 224, 146)));
+	background-image: -webkit-linear-gradient(top, rgb(249, 238, 185), rgb(239, 224, 146));
+	background-image: -moz-linear-gradient(top, rgb(249, 238, 185), rgb(239, 224, 146));
+	background-image: -o-linear-gradient(top, rgb(249, 238, 185), rgb(239, 224, 146));
+	background-image: -ms-linear-gradient(top, rgb(249, 238, 185), rgb(239, 224, 146));
+	background-image: linear-gradient(top, rgb(249, 238, 185), rgb(239, 224, 146));
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f9eeb9', EndColorStr='#efe092');
+	text-decoration: none;
+}
+.event-info-expanded a:active {
+	top: 1px;
+}
