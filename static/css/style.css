@@ -272,11 +272,11 @@ body {
   font-size: 23px;
   font-weight: 700;
   left: 185px;
-  padding-left: 35px;
+  padding-left: 42px;
   position: absolute;
   text-align: left;
   top: 64px;
-  width: 595px;
+  width: 588px;
   height: 22px;
   padding-top: 6px;
 }
@@ -287,8 +287,8 @@ body {
 #type-select ul li {
   float: left;
   line-height: 24px;
-  margin-right: 22px;
-  padding-left: 8px;
+  margin-right: 25px;
+  padding-bottom: 2px;
   -webkit-transition: all 0.15s ease-in;
   -o-transition: all 0.15s ease-in;
   transition: all 0.15s ease-in;
@@ -297,7 +297,7 @@ body {
   display: none
 }
 #type-select ul li:hover {
-  border-left: 4px solid #9b4ddc
+  border-bottom: 4px solid #9b4ddc
 }
 #type-select ul li a {
   color: #F6EBFF;
@@ -309,7 +309,8 @@ body {
   transition: all 0.15s ease-in;
 }
 #type-select ul li a:hover {
-  color: #fff
+  color: #fff;
+  text-decoration: none;
 }
 #type-select ul li a:active {
   top: 1px
