@@ -16,6 +16,11 @@ function build_card (score, event_name, event_venue, event_image, callback) {
             return;
         }
 
+        /* Too small for a column. */
+        if (width < 180 || height < 180) {
+            return;
+        }
+
         if (width < height && width > 300) {
             height = height * 300 / width;
             width = 300;
@@ -94,7 +99,10 @@ function seatgeek_data (data) {
     $('#container').isotope({
       // options
         itemSelector : '.flip-container',
-        layoutMode : 'fitRows',
+        layoutMode : 'masonry',
+        masonry: {
+            columnWidth: 140,
+        },
         getSortData: {
             score: function($elem) {
                 return parseFloat($elem.attr("data-score"));
