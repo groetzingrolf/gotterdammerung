@@ -274,6 +274,9 @@ body {
   -o-transition: all 0.15s ease-in;
   transition: all 0.15s ease-in;
 }
+#type-select ul li.active {
+    display: none;
+}
 #type-select ul li:hover {
   border-left: 4px solid #9b4ddc;
 }

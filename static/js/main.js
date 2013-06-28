@@ -118,7 +118,7 @@ function seatgeek_data (data) {
       // options
         itemSelector : '.flip-container',
         layoutMode : 'perfectMasonry',
-        masonry: {
+        perfectMasonry: {
             columnWidth: COL_WIDTH,
             rowHeight: COL_WIDTH,
         },
@@ -137,7 +137,7 @@ function seatgeek_data (data) {
         for (var j = 0; j < event.performers.length; j += 1) {
             if (event.performers[j].image) {
                 image = event.performers[j].image;
-                if (event.performers[j].images.mongo && Math.random() < 0.3) {
+                if (event.performers[j].images.mongo) {
                     image = event.performers[j].images.mongo;
                 }
                 break;
