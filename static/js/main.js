@@ -245,7 +245,7 @@ function init () {
         old_time = $(this).text();
         $(this).html("&nbsp;").width(200);
         $('#filter-time-input').val("");
-        $('#filter-time-input-wrap').show();
+        $('#filter-time-input-wrap').show().css({'left': $('#filter-time').position().left - 7});;
         $('#filter-time-input').focus();
     });
     $("#filter-time-input").keyup(function(e) {
@@ -275,6 +275,11 @@ function init () {
         resizer2.text(val);
         $(this).parent().hide();
         $("#filter-time").text(val).width(resizer2.outerWidth(true) - 16);
+    });
+    $('#filter-location').click(function() {
+        $(this).html("&nbsp;").width(300).css({'display': 'inline-block'});
+        $('#filter-location-input-wrap').show().css({'left': $('#filter-location').position().left - 7});
+        $('#filter-location-input').focus();
     });
     $('#filter-location-input').blur(function() {
         $('#filter-location-input').unbind().bind("geocode:result", function(event, result){
