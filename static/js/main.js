@@ -14,6 +14,12 @@ function seatgeek_data (data) {
 }
 
 function init () {
+	$('.overlay').hover(function() {
+		$(this).animate({ opacity: 0.17 });
+	}, function() {
+		$(this).animate({ opacity: 0 });
+	});
+
     var d = search_date.getFullYear() + "-" + search_date.getMonth() + "-" + search_date.getDate();
     alert(d);
     var url = "http://api.seatgeek.com/2/events?datetime_local=" + d + "&geoip=true&client_id=" + SG_KEY;
