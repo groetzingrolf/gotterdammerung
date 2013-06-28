@@ -204,18 +204,29 @@ function init () {
         $("#container").isotope({ filter: choice });
         return false;
     });
+    var old_time;
     $('#filter-time').click(function() {
+        old_time = $(this).text();
         $(this).html("&nbsp;").width(200);
         $('#filter-time-input-wrap').show();
         $('#filter-time-input').focus();
     });
+    $("#filter-time-input").keyup(function(e) {
+        if (e.which == 13) { // Enter key
+            $(this).blur();
+        }
+    });
     $('#filter-time-input').blur(function() {
+        var new_date = Date.parse($(this).val());
+        var val = old_time;
+        if (new_date) {
+            val = $(this).val();
+        }
         // Something this hacky deserves a hacky variable name
         var resizer2 = $("#hidden-resizer2");
-        resizer2.html($(this).val());
+        resizer2.text(val);
         $('#filter-time-input-wrap').hide();
-        $('#filter-time').html($(this).val()).show().width(resizer2.width());
-        console.log(Date.parse($(this).val()));
+        $('#filter-time').text(val).width(resizer2.outerWidth(true)).show();
     });
     $('#filter-location').click(function() {
         $(this).html("&nbsp;").width(300).css({'display': 'inline-block'});
