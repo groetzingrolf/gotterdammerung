@@ -164,6 +164,12 @@ function init () {
         jsonp: 'callback',
         jsonpCallback: "seatgeek_data"
       });
+
+    $('#filter-type').click(function() {
+        $("#container").transition({ y: '35px' }, function() {
+            $('#type-select').fadeIn();
+        });
+    });
 }
 
 $(init);
