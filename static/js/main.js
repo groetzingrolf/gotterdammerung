@@ -5,7 +5,7 @@ var type = "all";
 var search_date = new Date();
 search_date = search_date.getFullYear() + "-" + (search_date.getMonth() + 1) + "-" + search_date.getDate();
 
-function build_card (event_name, event_venue, event_image, callback) {
+function build_card (score, event_name, event_venue, event_image, callback) {
     var img = new Image();
     $(img).load(function() {
         var width = this.width;
@@ -24,7 +24,7 @@ function build_card (event_name, event_venue, event_image, callback) {
             event_info.append($("<h4>").text(event_venue));
         }
 
-        var card = $("<div>").addClass("event").css("width", width).css("height", height);
+        var card = $("<div>").addClass("event").css("width", width).css("height", height).attr("data-score", score);
         card.append(event_info);
         card.append($("<div>").addClass("overlay"));
         card.append($("<img>").attr("src", event_image).attr("width", width).attr("height", height));
@@ -41,7 +41,7 @@ function add_card(card) {
 function movie_data(data) {
     for (var i = 0; i < data.movies.length; i += 1) {
         var movie = data.movies[i];
-        build_card(movie.name, null, movie.image, add_card);
+        build_card(Math.max(movie.score - 40, 0), movie.name, null, movie.image, add_card);
     }
 }
 
@@ -71,8 +71,15 @@ function seatgeek_data (data) {
 
     $('#container').isotope({
       // options
-      itemSelector : '.event',
-      layoutMode : 'fitRows'
+        itemSelector : '.event',
+        layoutMode : 'fitRows',
+        getSortData: {
+            score: function($elem) {
+                return parseFloat($elem.attr("data-score"));
+            }
+        },
+        sortBy: "score",
+        sortAscending: false,
     });
 
     for (var i = 0; i < data.events.length; i += 1) {
@@ -90,7 +97,7 @@ function seatgeek_data (data) {
         if (!image) {
             continue;
         }
-        build_card(event.title, event.venue.name, image, add_card);
+        build_card(100 * event.score, event.title, event.venue.name, image, add_card);
     }
 }
 
