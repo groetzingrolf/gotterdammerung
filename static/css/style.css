@@ -31,8 +31,8 @@ body {
   transition: border 0.24s ease-in;
   position: relative;
 }
-.filter span:hover {
-  border-bottom: 4px solid #b274e5
+.filter span.filter:hover {
+	border-bottom: 4px solid #b274e5;
 }
 .filter span:active {
   top: 1px
