@@ -167,22 +167,22 @@ function reloadEvents(have_location) {
 }
 
 function init () {
-    $('#container').isotope({
-      // options
-        itemSelector : '.flip-container',
-        layoutMode : 'perfectMasonry',
-        perfectMasonry: {
-            columnWidth: COL_WIDTH,
-            rowHeight: COL_WIDTH,
-        },
-        getSortData: {
-            score: function($elem) {
-                return parseFloat($elem.attr("data-score"));
-            }
-        },
-        sortBy: "score",
-        sortAscending: false,
-    });
+    // $('#container').isotope({
+    //   // options
+    //     itemSelector : '.flip-container',
+    //     layoutMode : 'perfectMasonry',
+    //     perfectMasonry: {
+    //         columnWidth: COL_WIDTH,
+    //         rowHeight: COL_WIDTH,
+    //     },
+    //     getSortData: {
+    //         score: function($elem) {
+    //             return parseFloat($elem.attr("data-score"));
+    //         }
+    //     },
+    //     sortBy: "score",
+    //     sortAscending: false,
+    // });
 
 	$('.overlay').hover(function() {
 		$(this).animate({ opacity: 0.17 });
@@ -232,7 +232,8 @@ function init () {
         old_time = $(this).text();
         $(this).html("&nbsp;").width(200);
         $('#filter-time-input').val("");
-        $('#filter-time-input-wrap').show();
+        console.log($('#filter-time').position().left);
+        $('#filter-time-input-wrap').show().css({'left': $('#filter-time').position().left - 7 });
         $('#filter-time-input').focus();
     });
     $("#filter-time-input").keyup(function(e) {
@@ -263,17 +264,17 @@ function init () {
         $(this).parent().hide();
         $("#filter-time").text(val).width(resizer2.outerWidth(true) - 16);
     });
+    $('#filter-location').click(function() {
+        $(this).html("&nbsp;").width(300).css({'display': 'inline-block'});
+        $('#filter-location-input-wrap').show().css({'left': $('#filter-location').position().left - 7 });
+        $('#filter-location-input').focus();
+    });
     $('#filter-location-input').blur(function() {
         // Something this hacky deserves a hacky variable name
         var resizer2 = $("#hidden-resizer2");
         resizer2.text($(this).val());
         $(this).parent().hide();
         $("#filter-location").text($(this).val()).width(resizer2.outerWidth(true) - 16);
-    });
-    $('#filter-location').click(function() {
-        $(this).html("&nbsp;").width(300).css({'display': 'inline-block'});
-        $('#filter-location-input-wrap').show();
-        $('#filter-location-input').focus();
     });
     $('#filter-location-input').geocomplete();
 }
