@@ -89,15 +89,16 @@ body {
   text-shadow: 0 1px 4px rgba(1,0,1,.7);
 }
 .event-info h3 {
-  color: #ffffff;
+  color: #FFFFFF;
+  font-size: 28px;
+  font-weight: 100;
   line-height: 36px;
+  margin-bottom: 0;
   overflow: hidden;
+  padding-right: 25px;
+  margin-bottom: 0;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-weight: 100;
-  font-size: 28px;
-  padding-right: 25px;
-  line-height: 36px;
 }
 .event-info h4 {
  color: #C0BCC2;
@@ -108,7 +109,7 @@ body {
   overflow: hidden;
   padding-right: 30px;
   text-overflow: ellipsis;
-  white-space: normal;
+  white-space: nowrap;
 }
 .event.flipped {
   border: 1px solid #000;
